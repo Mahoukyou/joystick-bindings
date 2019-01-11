@@ -5,6 +5,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(
 	SRCS
 	main.cpp
+	joystick.h
+	joystick.cpp
+	button_bindings.h
+	button_bindings.cpp
+	axis_bindings.h
+	axis_bindings.cpp
 )
 
 add_executable(JoystickBindings ${SRCS})
