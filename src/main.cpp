@@ -68,24 +68,54 @@ int main()
 	print_connected_joysticks();
 
 	prim_bindings::joystick joystick{ 0 };
-	add_buttons_ids(joystick);
-
 
 	constexpr float cursor_move_mult = 25;
 	prim_bindings::axis_binding mouse_X{ sf::Joystick::Axis::X, 1 };
-	mouse_X.on_active = [](const float /*prev_value*/, const float newv, const double delta) -> void
+	mouse_X.on_active = [cursor_move_mult](const float /*prev_value*/, const float newv, const double delta) -> void
 	{
 		prim_bindings::move_cursor_x(newv * delta * cursor_move_mult);
 	};
 
 	prim_bindings::axis_binding mouse_Y{ sf::Joystick::Axis::Y, 1 };
-	mouse_Y.on_active = [](const float /*prev*/, const float newv, const double delta) -> void
+	mouse_Y.on_active = [cursor_move_mult](const float /*prev*/, const float newv, const double delta) -> void
 	{
 		prim_bindings::move_cursor_y(newv * delta * cursor_move_mult);
 	};
 
 	joystick.axis_bindings.push_back(mouse_X);
 	joystick.axis_bindings.push_back(mouse_Y);
+
+	constexpr float slow_cursor_move_mult = 10;
+	prim_bindings::axis_binding mouse_X_slow{ sf::Joystick::Axis::R, 1 };
+	mouse_X_slow.on_active = [slow_cursor_move_mult](const float /*prev_value*/, const float newv, const double delta) -> void
+	{
+		prim_bindings::move_cursor_x(newv * delta * slow_cursor_move_mult);
+	};
+
+	prim_bindings::axis_binding mouse_Y_slow{ sf::Joystick::Axis::Z, 1 };
+	mouse_Y_slow.on_active = [slow_cursor_move_mult](const float /*prev*/, const float newv, const double delta) -> void
+	{
+		prim_bindings::move_cursor_y(newv * delta * slow_cursor_move_mult);
+	};
+
+	joystick.axis_bindings.push_back(mouse_X_slow);
+	joystick.axis_bindings.push_back(mouse_Y_slow);
+
+	// mouse buttons
+	prim_bindings::button_binding mouseleft{ 2 };
+	mouseleft.on_state_change = [](const bool state)
+	{
+		prim_bindings::send_mouse_button(prim_bindings::mouse_button::left, state);
+	};
+
+	prim_bindings::button_binding mouseright{ 1 };
+	mouseright.on_state_change = [](const bool state)
+	{
+		prim_bindings::send_mouse_button(prim_bindings::mouse_button::right, state);
+	};
+
+	joystick.button_bindings.push_back(mouseleft);
+	joystick.button_bindings.push_back(mouseright);
 
 	using namespace std::chrono_literals;
 	sf::Clock clock;
