@@ -16,7 +16,7 @@ namespace prim_bindings
 		explicit joystick(int id);
 		~joystick() = default;
 
-		void pool_joystick(bool self_update);
+		void pool_joystick(bool self_update, double delta_time);
 
 		std::vector<button_binding> button_bindings;
 		std::vector<axis_binding> axis_bindings;

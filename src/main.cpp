@@ -50,7 +50,7 @@ void add_axis(prim_bindings::joystick& joystick)
 		}
 
 		prim_bindings::axis_binding binding{ axis, 1 };
-		binding.on_active = [i](const float prev, const float newv) -> void
+		binding.on_active = [i](const float prev, const float newv, const double /*delta*/) -> void
 		{
 			std::cout << "Axis " << i << " has has value: " << newv << '\n';
 		};
@@ -58,6 +58,8 @@ void add_axis(prim_bindings::joystick& joystick)
 		joystick.axis_bindings.push_back(binding);
 	}
 }
+
+
 
 
 int main()
@@ -68,12 +70,15 @@ int main()
 
 	prim_bindings::joystick joystick{ 0 };
 	add_buttons_ids(joystick);
-	add_axis(joystick);
+
+
+
 
 	using namespace std::chrono_literals;
+	sf::Clock clock;
 	while(true)
 	{
 		std::this_thread::sleep_for(25ms);
-		joystick.pool_joystick(true);
+		joystick.pool_joystick(true, clock.getElapsedTime().asSeconds());
 	}
 }

@@ -9,21 +9,19 @@ namespace prim_bindings
 		
 	}
 
-	void joystick::pool_joystick(const bool self_update)
+	void joystick::pool_joystick(const bool self_update, const double delta_time)
 	{
 		if(self_update)
 		{
 			sf::Joystick::update();
 		}
 
-		constexpr int max_joysticks_sfml = 8;
-
 		// todo remove any_joystick or leave it?
 		for(auto& binding : button_bindings)
 		{
 			if (id_ == any_joystick)
 			{
-				for (int joystick = 0; joystick < max_joysticks_sfml; ++joystick)
+				for (int joystick = 0; joystick < sf::Joystick::Count; ++joystick)
 				{
 					binding.pool_joystick(joystick);
 				}
@@ -38,14 +36,14 @@ namespace prim_bindings
 		{
 			if (id_ == any_joystick)
 			{
-				for (int joystick = 0; joystick < max_joysticks_sfml; ++joystick)
+				for (int joystick = 0; joystick < sf::Joystick::Count; ++joystick)
 				{
-					binding.pool_joystick(joystick);
+					binding.pool_joystick(joystick, delta_time);
 				}
 			}
 			else
 			{
-				binding.pool_joystick(id_);
+				binding.pool_joystick(id_, delta_time);
 			}
 		}
 	}

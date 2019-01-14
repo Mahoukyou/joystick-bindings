@@ -10,7 +10,7 @@ namespace prim_bindings
 
 	}
 
-	void axis_binding::pool_joystick(const int joystick_id)
+	void axis_binding::pool_joystick(const int joystick_id, const double delta_time)
 	{
 		if (joystick_id < 0 || !sf::Joystick::isConnected(joystick_id))
 		{
@@ -28,12 +28,12 @@ namespace prim_bindings
 		{
 			if (on_active)
 			{
-				on_active(previous_value_, new_value);
+				on_active(previous_value_, new_value, delta_time);
 			}
 
 			if (on_value_change && previous_value_ != new_value)
 			{
-				on_value_change(previous_value_, new_value);
+				on_value_change(previous_value_, new_value, delta_time);
 			}
 		}
 		else if(on_inactive)
