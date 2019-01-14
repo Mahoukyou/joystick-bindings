@@ -7,7 +7,7 @@ namespace prim_bindings
 	class button_binding
 	{
 	public:
-		button_binding(unsigned int button_id);
+		explicit button_binding(unsigned int button_id);
 
 		// todo, remove active&inactive ? 
 		/* Called every pool if the combination is active */

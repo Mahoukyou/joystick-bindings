@@ -24,7 +24,9 @@ namespace prim_bindings
 		void pool_joystick(bool self_update);
 
 		std::vector<button_binding> button_bindings;
-		std::vector<axis_binding> axis_bindings;
+		//std::vector<axis_binding> axis_bindings;
+
+		int get_joystick_id() const { return id_; }
 
 	private:
 		int id_;

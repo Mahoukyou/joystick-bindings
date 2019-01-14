@@ -23,11 +23,11 @@ namespace prim_bindings
 		}
 
 		const bool new_button_state = sf::Joystick::isButtonPressed(joystick_id, button_id_);
-		if (new_button_state)
+		if (new_button_state && on_active)
 		{
 			on_active();
 		}
-		else
+		else if(on_inactive)
 		{
 			on_inactive();
 		}
@@ -43,6 +43,10 @@ namespace prim_bindings
 		}
 
 		current_state_ = new_state;
-		on_state_change(new_state);
+
+		if (on_state_change)
+		{
+			on_state_change(new_state);
+		}
 	}
 }

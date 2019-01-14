@@ -13,7 +13,7 @@ namespace prim_bindings
 	{
 		if(self_update)
 		{
-		//	sf::Joystick::update();
+			sf::Joystick::update();
 		}
 
 		constexpr int max_joysticks_sfml = 8;
