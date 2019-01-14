@@ -3,10 +3,11 @@
 
 namespace prim_bindings
 {
-	button_binding::button_binding() :
+	button_binding::button_binding(unsigned int button_id) :
+		button_id_{ button_id },
 		current_state_{ false }
 	{
-
+		// todo check button id
 	}
 
 	void button_binding::pool_joystick(const int joystick_id)
@@ -16,44 +17,32 @@ namespace prim_bindings
 			return;
 		}
 
-		bool combination_on = true;
-	/*	for (size_t i = 0; i < sf::Joystick::getButtonCount(joystick_id); ++i)
+		if (button_id_ >= sf::Joystick::getButtonCount(joystick_id))
 		{
-			if(button_combination_.has_key(i))
-		}*/
-
-		for(auto button : button_combination_.buttons_combination_)
-		{
-			if(button.first < sf::Joystick::getButtonCount(joystick_id))
-			{
-				if(button.second != sf::Joystick::isButtonPressed(joystick_id, button.first))
-				{
-					combination_on = false;
-					break;
-				}
-			}
+			return;
 		}
 
-		if(combination_on)
+		const bool new_button_state = sf::Joystick::isButtonPressed(joystick_id, button_id_);
+		if (new_button_state)
 		{
-			on_active_();
+			on_active();
 		}
 		else
 		{
-			on_inactive_();
+			on_inactive();
 		}
 
-		set_state(combination_on);
+		set_state(new_button_state);
 	}
 
-	void button_binding::set_state(bool new_state)
+	void button_binding::set_state(const bool new_state)
 	{
-		if(current_state_ == new_state)
+		if (current_state_ == new_state)
 		{
 			return;
 		}
 
 		current_state_ = new_state;
-		on_state_change_(new_state);
+		on_state_change(new_state);
 	}
 }
