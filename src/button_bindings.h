@@ -48,23 +48,31 @@ namespace prim_bindings
 			}
 		}
 
-	private:
-		std::map<int, bool> buttons_combination_;
+	//private:
+		std::map<unsigned int, bool> buttons_combination_;
 	};
 
 	class button_binding
 	{
 	public:
+		button_binding();
+
 		button_combination button_combination_;
 
+		/* Called every pool if the combination is active */
 		std::function<void()> on_active_;
+
+		/* Called every pool if the combination is inactive*/
 		std::function<void()> on_inactive_;
 
+		/* Called when the state changes*/
 		std::function<void(bool)> on_state_change_;
 
-		void pool_joystick();
+		void pool_joystick(int joystick_id);
 
 	private:
+		void set_state(bool new_state);
+
 		bool current_state_;
 	};
 }

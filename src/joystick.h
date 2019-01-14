@@ -10,6 +10,10 @@ namespace prim_bindings
 {
 	class joystick final
 	{
+	public:
+		enum { any_joystick = -1};
+
+		// id == -1 => any joystick?
 		explicit joystick(int id);
 		~joystick() = default;
 
@@ -21,5 +25,8 @@ namespace prim_bindings
 
 		std::vector<button_binding> button_bindings;
 		std::vector<axis_binding> axis_bindings;
+
+	private:
+		int id_;
 	};
 }
