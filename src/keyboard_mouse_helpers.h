@@ -11,12 +11,18 @@ namespace prim_bindings
 #ifdef _WINDOWS
 	enum class mouse_button { left, right, middle };
 
-	void press_key(unsigned char key);
-	void release_key(unsigned char key);
+	/* key - virtual key code */
+	void press_key(unsigned short key);
+
+	/* key - virtual key code */
+	void release_key(unsigned short key);
+
+	/* key - virtual key code */
+	void send_key_input(unsigned short key, bool pressed);
 
 	void press_mouse_button(mouse_button button);
 	void release_mouse_button(mouse_button button);
-	void send_mouse_button(mouse_button button, bool press);
+	void send_mouse_button(mouse_button button, bool pressed);
 #else
 	//button presses are only available on windows atm
 #endif

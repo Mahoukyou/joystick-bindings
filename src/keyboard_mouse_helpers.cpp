@@ -6,13 +6,15 @@ namespace
 {
 	void send_mouse_input(const DWORD flags)
 	{
-		INPUT input[1];
+		constexpr int input_size{ 1 };
+
+		INPUT input[input_size];
 		memset(input, 0, sizeof(input));
 
 		input[0].type = INPUT_MOUSE;
 		input[0].mi.dwFlags = flags;
 
-		SendInput(1, input, sizeof(input));
+		SendInput(input_size, input, sizeof(input));
 	};
 }
 
@@ -42,15 +44,29 @@ void prim_bindings::mouse_cursor(const int delta_x, const int delta_y)
 }
 
 #ifdef _WINDOWS
-void prim_bindings::press_key(unsigned char key)
+void prim_bindings::press_key(const unsigned short key)
 {
-	//...
+	send_key_input(key, false);
 }
 
-void prim_bindings::release_key(unsigned char key)
+void prim_bindings::release_key(const unsigned short key)
 {
-	//...
+	send_key_input(key, true);	
 }
+
+void prim_bindings::send_key_input(const unsigned short key, const bool pressed)
+{
+	constexpr int input_size{ 1 };
+
+	INPUT input[input_size];
+	memset(input, 0, sizeof(input));
+
+	input[0].type = INPUT_KEYBOARD;
+	input[0].ki.wVk = key;
+	input[0].ki.dwFlags = pressed ? 0 : KEYEVENTF_KEYUP;
+
+	SendInput(input_size, input, sizeof(input));
+};
 
 void prim_bindings::press_mouse_button(const mouse_button button)
 {
@@ -94,9 +110,9 @@ void prim_bindings::release_mouse_button(const mouse_button button)
 	send_mouse_input(flags);
 }
 
-void prim_bindings::send_mouse_button(const mouse_button button, const bool press)
+void prim_bindings::send_mouse_button(const mouse_button button, const bool pressed)
 {
-	if(press)
+	if(pressed)
 	{
 		press_mouse_button(button);
 	}

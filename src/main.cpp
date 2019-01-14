@@ -20,6 +20,7 @@ void print_connected_joysticks()
 	}
 }
 
+// Add every possible button binding to joystick for tests
 void add_buttons_ids(prim_bindings::joystick& joystick)
 {
 	for (unsigned int i = 0; i < sf::Joystick::getButtonCount(joystick.get_joystick_id()); ++i)
@@ -41,6 +42,7 @@ void add_buttons_ids(prim_bindings::joystick& joystick)
 	}
 }
 
+// Add every possible axis binding to joystick for tests
 void add_axis(prim_bindings::joystick& joystick)
 {
 	for (unsigned int i = 0; i < sf::Joystick::AxisCount; ++i)
@@ -69,6 +71,9 @@ int main()
 
 	prim_bindings::joystick joystick{ 0 };
 
+	// some test, remove later
+
+	// cursor movement via controller axis, fast
 	constexpr float cursor_move_mult = 25;
 	prim_bindings::axis_binding mouse_X{ sf::Joystick::Axis::X, 1 };
 	mouse_X.on_active = [cursor_move_mult](const float /*prev_value*/, const float newv, const double delta) -> void
@@ -85,6 +90,7 @@ int main()
 	joystick.axis_bindings.push_back(mouse_X);
 	joystick.axis_bindings.push_back(mouse_Y);
 
+	// cursor movement via controller axis, slow
 	constexpr float slow_cursor_move_mult = 10;
 	prim_bindings::axis_binding mouse_X_slow{ sf::Joystick::Axis::R, 1 };
 	mouse_X_slow.on_active = [slow_cursor_move_mult](const float /*prev_value*/, const float newv, const double delta) -> void
@@ -116,6 +122,15 @@ int main()
 
 	joystick.button_bindings.push_back(mouseleft);
 	joystick.button_bindings.push_back(mouseright);
+
+	// keyboard key test
+	prim_bindings::button_binding key_a{ 0 };
+	key_a.on_state_change = [](const bool state)
+	{
+		prim_bindings::send_key_input(0x41, state);
+	};
+
+	joystick.button_bindings.push_back(key_a);
 
 	using namespace std::chrono_literals;
 	sf::Clock clock;
