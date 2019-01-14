@@ -43,7 +43,6 @@ namespace prim_bindings
 		}
 
 		current_state_ = new_state;
-
 		if (on_state_change)
 		{
 			on_state_change(new_state);

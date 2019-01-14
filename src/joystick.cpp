@@ -34,20 +34,19 @@ namespace prim_bindings
 			}
 		}
 
-		//for (auto& binding : axis_bindings)
-		//{
-		//	if (id_ == any_joystick)
-		//	{
-		//		for (int joystick = 0; joystick < max_joysticks_sfml; ++joystick)
-		//		{
-		//			binding.pool_joystick(joystick);
-		//		}
-		//	}
-		//	else
-		//	{
-		//		binding.pool_joystick(id_);
-		//	}
-		//}
-
+		for (auto& binding : axis_bindings)
+		{
+			if (id_ == any_joystick)
+			{
+				for (int joystick = 0; joystick < max_joysticks_sfml; ++joystick)
+				{
+					binding.pool_joystick(joystick);
+				}
+			}
+			else
+			{
+				binding.pool_joystick(id_);
+			}
+		}
 	}
 }
