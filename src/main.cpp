@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "keyboard_mouse_helpers.h"
+
 void print_connected_joysticks()
 {
 	for(int i = 0; i < sf::Joystick::Count; ++i)
@@ -59,9 +61,6 @@ void add_axis(prim_bindings::joystick& joystick)
 	}
 }
 
-
-
-
 int main()
 {
 	sf::Joystick::update();
@@ -72,13 +71,28 @@ int main()
 	add_buttons_ids(joystick);
 
 
+	constexpr float cursor_move_mult = 25;
+	prim_bindings::axis_binding mouse_X{ sf::Joystick::Axis::X, 1 };
+	mouse_X.on_active = [](const float /*prev_value*/, const float newv, const double delta) -> void
+	{
+		prim_bindings::move_cursor_x(newv * delta * cursor_move_mult);
+	};
 
+	prim_bindings::axis_binding mouse_Y{ sf::Joystick::Axis::Y, 1 };
+	mouse_Y.on_active = [](const float /*prev*/, const float newv, const double delta) -> void
+	{
+		prim_bindings::move_cursor_y(newv * delta * cursor_move_mult);
+	};
+
+	joystick.axis_bindings.push_back(mouse_X);
+	joystick.axis_bindings.push_back(mouse_Y);
 
 	using namespace std::chrono_literals;
 	sf::Clock clock;
 	while(true)
 	{
-		std::this_thread::sleep_for(25ms);
+		std::this_thread::sleep_for(1ms);
 		joystick.pool_joystick(true, clock.getElapsedTime().asSeconds());
+		clock.restart();
 	}
 }

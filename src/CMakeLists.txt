@@ -11,6 +11,8 @@ set(
 	button_bindings.cpp
 	axis_bindings.h
 	axis_bindings.cpp
+	keyboard_mouse_helpers.h
+	keyboard_mouse_helpers.cpp
 )
 
 add_executable(JoystickBindings ${SRCS})
