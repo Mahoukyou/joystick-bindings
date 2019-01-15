@@ -38,7 +38,7 @@ void add_buttons_ids(prim_bindings::joystick& joystick)
 			}
 		};
 
-		joystick.button_bindings.push_back(binding);
+		joystick.add_button_binding(binding);
 	}
 }
 
@@ -59,7 +59,7 @@ void add_axis(prim_bindings::joystick& joystick)
 			std::cout << "Axis " << i << " has has value: " << newv << '\n';
 		};
 
-		joystick.axis_bindings.push_back(binding);
+		joystick.add_axis_binding(binding);
 	}
 }
 
@@ -87,8 +87,10 @@ int main()
 		prim_bindings::move_cursor_y(newv * delta * cursor_move_mult);
 	};
 
-	joystick.axis_bindings.push_back(mouse_X);
-	joystick.axis_bindings.push_back(mouse_Y);
+	joystick.add_axis_binding(mouse_X);
+	std::cout << joystick.has_axis_binding(mouse_Y.get_axis());
+	joystick.add_axis_binding(mouse_Y);
+	std::cout << joystick.has_axis_binding(mouse_Y.get_axis());
 
 	// cursor movement via controller axis, slow
 	constexpr float slow_cursor_move_mult = 10;
@@ -104,8 +106,8 @@ int main()
 		prim_bindings::move_cursor_y(newv * delta * slow_cursor_move_mult);
 	};
 
-	joystick.axis_bindings.push_back(mouse_X_slow);
-	joystick.axis_bindings.push_back(mouse_Y_slow);
+	joystick.add_axis_binding(mouse_X_slow);
+	joystick.add_axis_binding(mouse_Y_slow);
 
 	// mouse buttons
 	prim_bindings::button_binding mouseleft{ 2 };
@@ -120,8 +122,8 @@ int main()
 		prim_bindings::send_mouse_button(prim_bindings::mouse_button::right, state);
 	};
 
-	joystick.button_bindings.push_back(mouseleft);
-	joystick.button_bindings.push_back(mouseright);
+	joystick.add_button_binding(mouseleft);
+	joystick.add_button_binding(mouseright);
 
 	// keyboard key test
 	prim_bindings::button_binding key_a{ 0 };
@@ -130,7 +132,7 @@ int main()
 		prim_bindings::send_key_input(0x41, state);
 	};
 
-	joystick.button_bindings.push_back(key_a);
+	joystick.add_button_binding(key_a);
 
 	using namespace std::chrono_literals;
 	sf::Clock clock;

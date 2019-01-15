@@ -10,8 +10,6 @@ namespace prim_bindings
 	public:
 		explicit axis_binding(sf::Joystick::Axis axis, float dead_zone);
 
-		void pool_joystick(int joystick_id, double delta_time);
-
 		/* Called every pool if axis is active (outside dead_zone) */
 		std::function<void(float, float, double)> on_active;
 
@@ -20,6 +18,9 @@ namespace prim_bindings
 
 		/* Called the value changes and it is outside the dead_zone */
 		std::function<void(float, float, double)> on_value_change;
+
+		void pool_joystick(int joystick_id, double delta_time);
+		sf::Joystick::Axis get_axis() const { return axis_; }
 
 	private:
 		sf::Joystick::Axis axis_;

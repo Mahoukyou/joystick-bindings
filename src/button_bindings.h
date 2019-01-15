@@ -20,6 +20,7 @@ namespace prim_bindings
 		std::function<void(bool)> on_state_change;
 
 		void pool_joystick(int joystick_id);
+		unsigned int get_id() const { return button_id_; }
 
 	private:
 		void set_state(bool new_state);
