@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "keyboard_mouse_helpers.h"
+#include <windows.h>
 
 void print_connected_joysticks()
 {
@@ -134,6 +135,16 @@ int main()
 
 	joystick.add_button_binding(key_a);
 
+	// multiple keys test
+	prim_bindings::button_binding alt_tab_key{ 3 };
+	alt_tab_key.on_state_change = [](const bool state)
+	{
+		prim_bindings::send_key_input(VK_MENU, state);
+		prim_bindings::send_key_input(VK_TAB, state);
+	};
+
+	joystick.add_button_binding(alt_tab_key);
+			
 	using namespace std::chrono_literals;
 	sf::Clock clock;
 	while(true)
