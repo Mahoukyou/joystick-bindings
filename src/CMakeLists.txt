@@ -4,7 +4,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
  
 set(
 	SRCS
-	main.cpp
 	joystick.h
 	joystick.cpp
 	button_bindings.h
@@ -15,6 +14,6 @@ set(
 	keyboard_mouse_helpers.cpp
 )
 
-add_executable(JoystickBindings ${SRCS})
-
+add_library(JoystickBindings ${SRCS})
+set_target_properties(JoystickBindings PROPERTIES LINKER_LANGUAGE CXX) 
 target_link_libraries(JoystickBindings sfml-window)
