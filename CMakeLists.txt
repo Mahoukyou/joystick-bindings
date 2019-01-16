@@ -16,4 +16,9 @@ find_package(SFML 2.5.1 COMPONENTS window REQUIRED)
 
 include_directories(".")
 add_subdirectory(src)
-add_subdirectory(example)
+
+option(COMPILE_EXAMPLES "Compile Examples" TRUE)
+
+if(COMPILE_EXAMPLES)
+	add_subdirectory(example)
+endif()
