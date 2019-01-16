@@ -3,7 +3,7 @@
 
 namespace prim_bindings
 {
-	button_binding::button_binding(unsigned int button_id) :
+	button_binding::button_binding(const unsigned int button_id) :
 		button_id_{ button_id },
 		current_state_{ false }
 	{
@@ -27,7 +27,7 @@ namespace prim_bindings
 		{
 			on_active();
 		}
-		else if(on_inactive)
+		else if (on_inactive)
 		{
 			on_inactive();
 		}

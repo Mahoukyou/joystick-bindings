@@ -112,7 +112,7 @@ void prim_bindings::release_mouse_button(const mouse_button button)
 
 void prim_bindings::send_mouse_button(const mouse_button button, const bool pressed)
 {
-	if(pressed)
+	if (pressed)
 	{
 		press_mouse_button(button);
 	}
@@ -121,5 +121,4 @@ void prim_bindings::send_mouse_button(const mouse_button button, const bool pres
 		release_mouse_button(button);
 	}
 }
-
 #endif

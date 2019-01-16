@@ -12,7 +12,7 @@ namespace prim_bindings
 	class joystick final
 	{
 	public:
-		enum { any_joystick = -1};
+		enum { any_joystick = -1 };
 
 		explicit joystick(int id);
 		~joystick() = default;

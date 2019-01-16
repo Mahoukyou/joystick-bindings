@@ -6,18 +6,18 @@ namespace prim_bindings
 	joystick::joystick(const int id) :
 		id_{ id }
 	{
-		
+
 	}
 
 	void joystick::pool_joystick(const bool self_update, const double delta_time)
 	{
-		if(self_update)
+		if (self_update)
 		{
 			sf::Joystick::update();
 		}
 
 		// todo remove any_joystick or leave it?
-		for(auto& binding : button_bindings_)
+		for (auto& binding : button_bindings_)
 		{
 			if (id_ == any_joystick)
 			{
@@ -50,7 +50,7 @@ namespace prim_bindings
 
 	bool joystick::add_button_binding(const button_binding& binding)
 	{
-		if(has_button_binding(binding.get_id()))
+		if (has_button_binding(binding.get_id()))
 		{
 			return false;
 		}

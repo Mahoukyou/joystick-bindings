@@ -24,7 +24,7 @@ namespace prim_bindings
 
 		const float new_value = sf::Joystick::getAxisPosition(joystick_id, axis_);
 		const bool is_active = abs(new_value) > dead_zone_;
-		if(is_active)
+		if (is_active)
 		{
 			if (on_active)
 			{
@@ -36,7 +36,7 @@ namespace prim_bindings
 				on_value_change(previous_value_, new_value, delta_time);
 			}
 		}
-		else if(on_inactive)
+		else if (on_inactive)
 		{
 			on_inactive();
 		}
