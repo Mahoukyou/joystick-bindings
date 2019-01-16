@@ -31,7 +31,7 @@ void add_buttons_ids(prim_bindings::joystick& joystick)
 	for (unsigned int i = 0; i < sf::Joystick::getButtonCount(joystick.get_joystick_id()); ++i)
 	{
 		prim_bindings::button_binding binding{ i };
-		binding.on_state_change = [i, joystick](const bool state) -> void
+		binding.on_state_change = [i, &joystick](const bool state) -> void
 		{
 			if(state)
 			{
@@ -59,7 +59,7 @@ void add_axis(prim_bindings::joystick& joystick)
 		}
 
 		prim_bindings::axis_binding binding{ axis, 1 };
-		binding.on_active = [i, joystick](const float prev, const float newv, const double /*delta*/) -> void
+		binding.on_active = [i, &joystick](const float prev, const float newv, const double /*delta*/) -> void
 		{
 			std::cout << "Joystick id: " << joystick.get_joystick_id() << ", Axis: " << i << " has a value of: " << newv << '\n';
 		};
@@ -85,7 +85,7 @@ int main()
 			add_buttons_ids(joy);
 			add_axis(joy);
 
-			joysticks.push_back(joy);
+			joysticks.push_back(std::move(joy));
 		}
 	}
 

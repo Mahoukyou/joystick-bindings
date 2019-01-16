@@ -70,7 +70,19 @@ namespace prim_bindings
 		return true;
 	}
 
-	void joystick::remove_button_binding(const unsigned button_id)
+	void joystick::replace_button_binding(const button_binding& binding)
+	{
+		remove_button_binding(binding.get_id());
+		add_button_binding(binding);
+	}
+
+	void joystick::replace_axis_binding(const axis_binding& binding)
+	{
+		remove_button_binding(binding.get_axis());
+		add_axis_binding(binding);
+	}
+
+	void joystick::remove_button_binding(const unsigned int button_id)
 	{
 		std::remove_if(button_bindings_.begin(), button_bindings_.end(), [button_id](const button_binding& binding) -> bool
 		{
@@ -86,7 +98,7 @@ namespace prim_bindings
 		});
 	}
 
-	bool joystick::has_button_binding(const unsigned button_id) const
+	bool joystick::has_button_binding(const unsigned int button_id) const
 	{
 		const auto iterator = std::find_if(button_bindings_.begin(), button_bindings_.end(), [button_id](const button_binding& binding) -> bool
 		{

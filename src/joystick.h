@@ -17,16 +17,25 @@ namespace prim_bindings
 		explicit joystick(int id);
 		~joystick() = default;
 
+		joystick(const joystick&) = delete;
+		joystick(joystick&&) noexcept = default;
+
+		joystick& operator=(const joystick&) = delete;
+		joystick& operator=(joystick&&) noexcept = default;
+
 		void pool_joystick(bool self_update, double delta_time);
 
 		bool add_button_binding(const button_binding& binding);
 		bool add_axis_binding(const axis_binding& binding);
+
+		void replace_button_binding(const button_binding& binding);
+		void replace_axis_binding(const axis_binding& binding);
+
 		void remove_button_binding(unsigned int button_id);
 		void remove_axis_binding(sf::Joystick::Axis axis);
+
 		bool has_button_binding(unsigned int button_id) const;
 		bool has_axis_binding(sf::Joystick::Axis axis) const;
-
-
 
 		int get_joystick_id() const { return id_; }
 
